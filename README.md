@@ -2,7 +2,9 @@
 
 ## Add listener
 In order to react with an event, an object first has to be registered with that event.
+
 > You can decleare event to use in ObserverEvents.
+
 If the method doesn't has any parameter:
 ```java
 EventsDispatcher.Instance().RegisterListener(ObserverEvents.SampleEvent, (param) -> SampleMethod());
