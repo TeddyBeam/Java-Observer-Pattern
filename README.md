@@ -1,5 +1,9 @@
 # Java Observer Design Pattern
 
+## Update non-singleton EventsDispatcher
+Now you can call events via interface to remove dependencies.
+> Note that different references can't communicate with each other
+
 ## Add listener
 In order to react with an event, an object first has to be registered with that event.
 
@@ -7,22 +11,22 @@ In order to react with an event, an object first has to be registered with that 
 
 If the method doesn't has any parameter:
 ```java
-EventsDispatcher.Instance().RegisterListener(ObserverEvents.SampleEvent, (param) -> SampleMethod());
+SingletonEventDispatcher.Instance().RegisterListener(ObserverEvents.SampleEvent, (param) -> SampleMethod());
 ```
 Otherwise you can cast it like this:
 ``` java
-EventsDispatcher.Instance().RegisterListener(ObserverEvents.SampleEvent, (param) -> SampleMethod((int)param));
+SingletonEventDispatcher.Instance().RegisterListener(ObserverEvents.SampleEvent, (param) -> SampleMethod((int)param));
 ```
 
 ## Post event
 Can be posted anywhere, this will notify all listeners that have been registered for this event.
 You can send a variable with the event:
 ```java
-EventsDispatcher.Instance().PostEvent(ObserverEvents.SampleEvent, sampleVariable);
+SingletonEventDispatcher.Instance().PostEvent(ObserverEvents.SampleEvent, sampleVariable);
 ```
 or without it:
 ```java
-EventsDispatcher.Instance().PostEvent(ObserverEvents.SampleEvent);
+SingletonEventDispatcher.Instance().PostEvent(ObserverEvents.SampleEvent);
 ```
 
 ## Remove listener
@@ -33,11 +37,11 @@ Consumer<Object> sampleMethodCached = (param) -> SampleMethod();
 ```
 and add it like this:
 ```java
-EventsDispatcher.Instance().RegisterListener(ObserverEvents.SampleEvent, sampleMethodCached);
+SingletonEventDispatcher.Instance().RegisterListener(ObserverEvents.SampleEvent, sampleMethodCached);
 ```
 then you can remove it:
 ```java
-EventsDispatcher.Instance().RemoveListener(ObserverEvents.OnEventOne, sampleMethodCached);
+SingletonEventDispatcher.Instance().RemoveListener(ObserverEvents.OnEventOne, sampleMethodCached);
 ```
 
 
