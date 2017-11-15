@@ -5,40 +5,21 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 
-public class EventsDispatcher
+/**
+ * Note that different references can't communicate with each other.
+ */
+public class EventsDispatcher implements IEventDispatcher 
 {
-    private static EventsDispatcher instance;
-
-    private EventsDispatcher() { }
-
-    public static EventsDispatcher Instance()
-    {
-        if (instance == null)
-        {
-            synchronized (EventsDispatcher.class)
-            {
-                if (instance == null)
-                {
-                    instance = new EventsDispatcher();
-                }
-            }
-        }
-        return instance;
-    }
-
-    /**
+	 /**
      * Store all listeners.
      */
     private Map<ObserverEvents, ArrayList<Consumer<Object>>> listenersDict = new HashMap<ObserverEvents, ArrayList<Consumer<Object>>>();
 
-    /**
-     * Register to listen for event.
-     * 
-     * @param event Event object want to listen.
-     * @param method This method will be invoked when the event be raised.
-     */
-    public void RegisterListener(ObserverEvents event,
-            Consumer<Object> method)
+    /* (non-Javadoc)
+	 * @see observer.IEventDispatcher#RegisterListener(observer.ObserverEvents, java.util.function.Consumer)
+	 */
+    @Override
+	public void RegisterListener(ObserverEvents event, Consumer<Object> method)
     {
         if (method == null)
         {
@@ -59,15 +40,11 @@ public class EventsDispatcher
         }
     }
 
-    /**
-     * Remove the listener. Use to unregister listener.
-     * 
-     * @param event Event object want to remove.
-     * @param method This method will be removed from observer's event
-     *            dictionary.
-     */
-    public void RemoveListener(ObserverEvents event,
-            Consumer<Object> method)
+    /* (non-Javadoc)
+	 * @see observer.IEventDispatcher#RemoveListener(observer.ObserverEvents, java.util.function.Consumer)
+	 */
+    @Override
+	public void RemoveListener(ObserverEvents event, Consumer<Object> method)
     {
         if (listenersDict.containsKey(event))
         {
@@ -86,14 +63,11 @@ public class EventsDispatcher
         }
     }
 
-    /**
-     * Post an event. This will notify all listener that has been registered for
-     * this event.
-     * 
-     * @param event Event object want to post.
-     * @param param Parameter can be sent with the event.
-     */
-    public void PostEvent(ObserverEvents event, Object param)
+    /* (non-Javadoc)
+	 * @see observer.IEventDispatcher#PostEvent(observer.ObserverEvents, java.lang.Object)
+	 */
+    @Override
+	public void PostEvent(ObserverEvents event, Object param)
     {
         if (listenersDict.containsKey(event))
         {
@@ -126,17 +100,20 @@ public class EventsDispatcher
         }
     }
 
-    /**
-     * Post an event with null parameter.
-     * 
-     * @param event Event object want to post.
-     */
-    public void PostEvent(ObserverEvents event)
+    /* (non-Javadoc)
+	 * @see observer.IEventDispatcher#PostEvent(observer.ObserverEvents)
+	 */
+    @Override
+	public void PostEvent(ObserverEvents event)
     {
         PostEvent(event, null);
     }
 
-    public void ClearAllListener()
+    /* (non-Javadoc)
+	 * @see observer.IEventDispatcher#ClearAllListener()
+	 */
+    @Override
+	public void ClearAllListener()
     {
         listenersDict.clear();
     }
