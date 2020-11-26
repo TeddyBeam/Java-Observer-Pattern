@@ -6,20 +6,20 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 /**
- * Note that different references can't communicate with each other.
+ * Note that different instance of this class can't communicate with each other.
  */
 public class EventsDispatcher implements IEventDispatcher 
 {
-	 /**
-     * Store all listeners.
-     */
+    /** (non-Javadoc)
+    * Store all listeners.
+    */
     private Map<ObserverEvents, ArrayList<Consumer<Object>>> listenersDict = new HashMap<ObserverEvents, ArrayList<Consumer<Object>>>();
 
-    /* (non-Javadoc)
-	 * @see observer.IEventDispatcher#RegisterListener(observer.ObserverEvents, java.util.function.Consumer)
-	 */
+    /** (non-Javadoc)
+    * @see observer.IEventDispatcher#RegisterListener(observer.ObserverEvents, java.util.function.Consumer)
+    */
     @Override
-	public void RegisterListener(ObserverEvents event, Consumer<Object> method)
+    public void RegisterListener(ObserverEvents event, Consumer<Object> method)
     {
         if (method == null)
         {
@@ -40,11 +40,11 @@ public class EventsDispatcher implements IEventDispatcher
         }
     }
 
-    /* (non-Javadoc)
-	 * @see observer.IEventDispatcher#RemoveListener(observer.ObserverEvents, java.util.function.Consumer)
-	 */
+    /** (non-Javadoc)
+    * @see observer.IEventDispatcher#RemoveListener(observer.ObserverEvents, java.util.function.Consumer)
+    */
     @Override
-	public void RemoveListener(ObserverEvents event, Consumer<Object> method)
+    public void RemoveListener(ObserverEvents event, Consumer<Object> method)
     {
         if (listenersDict.containsKey(event))
         {
@@ -63,11 +63,11 @@ public class EventsDispatcher implements IEventDispatcher
         }
     }
 
-    /* (non-Javadoc)
-	 * @see observer.IEventDispatcher#PostEvent(observer.ObserverEvents, java.lang.Object)
-	 */
+    /** (non-Javadoc)
+    * @see observer.IEventDispatcher#PostEvent(observer.ObserverEvents, java.lang.Object)
+    */
     @Override
-	public void PostEvent(ObserverEvents event, Object param)
+    public void PostEvent(ObserverEvents event, Object param)
     {
         if (listenersDict.containsKey(event))
         {
@@ -100,20 +100,20 @@ public class EventsDispatcher implements IEventDispatcher
         }
     }
 
-    /* (non-Javadoc)
-	 * @see observer.IEventDispatcher#PostEvent(observer.ObserverEvents)
-	 */
+    /** (non-Javadoc)
+    * @see observer.IEventDispatcher#PostEvent(observer.ObserverEvents)
+    */
     @Override
-	public void PostEvent(ObserverEvents event)
+    public void PostEvent(ObserverEvents event)
     {
         PostEvent(event, null);
     }
 
-    /* (non-Javadoc)
-	 * @see observer.IEventDispatcher#ClearAllListener()
-	 */
+    /** (non-Javadoc)
+    * @see observer.IEventDispatcher#ClearAllListener()
+    */
     @Override
-	public void ClearAllListener()
+    public void ClearAllListener()
     {
         listenersDict.clear();
     }
