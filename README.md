@@ -43,6 +43,3 @@ then you can remove it:
 ```java
 SingletonEventDispatcher.Instance().RemoveListener(ObserverEvents.OnEventOne, sampleMethodCached);
 ```
-
-
-Feel free to use it. Contact me at lydongcanh@gmail.com if you have something to say.
